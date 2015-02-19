@@ -32,3 +32,32 @@ dfAll <- dfAll[order(dfAll$Subject, dfAll$Activity),]
 
 #rename activity values with their corresponding activity descriptions
 dfAll$Activity <- sapply(dfAll$Activity,function(x) activityLabels[x,2])
+
+#Now create a tidy data set.
+
+#create an empty data frame with appropriate dimensions:
+#number of rows = (number of unique subjects) * (number of unique activities)
+#number of columns = number of unique sensor measurement types + 2 (for subject and activity)
+uniqueSubjects <- unique(dfAll$Subject)
+uniqueActivities <- unique(dfAll$Activity)
+
+dfTidy <- data.frame(matrix(0, nrow = length(uniqueSubjects) * length(uniqueActivities), ncol = ncol(dfAll)))
+
+#names remain the same
+names(dfTidy) <- names(dfAll)
+
+#ordering of subjects and activities matches the ordering of dfAll
+dfTidy$Subject <- rep(uniqueSubjects, each = length(uniqueActivities))
+dfTidy$Activity <- rep(uniqueActivities, times = length(uniqueSubjects))
+
+#Calculate the mean of all values for each sensor type pertaining to a unique subject and activity
+for(i in 1:nrow(dfTidy)) {
+    for(col in 3:ncol(dfTidy)) {
+        meanSensorVal <- mean(dfAll[which(dfAll$Subject == dfTidy[i,1] & 
+                                  dfAll$Activity == dfTidy[i,2]),names(dfAll[col])])
+        dfTidy[i,col] <- meanSensorVal
+    }
+}
+
+write.table(dfTidy,"tidyData.txt", row.names = FALSE)
+
