@@ -1,7 +1,4 @@
----
-title: "Code Book for tidyData.txt"
-output: html_document
----
+##Code Book for tidyData.txt
 
 There are 561 distinct sensor measurements in this dataset. To produce a more compact tidy dataset, only sensor measurements corresponding to the mean and standard deviation of each sensor signal were included, which amounts to 66 variables. This can be summarized as follows, borrowing from the original research file features_info.txt:
 

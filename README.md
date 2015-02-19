@@ -1,7 +1,6 @@
----
-title: "Description of run_analysis.R Processing Script"
-output: html_document
----
+
+##Description of run_analysis.R Processing Script
+
 
 The original data set included by the authors of the Human Activity Recognition study is massive and distributed. The run_analysis.R script is designed to separate the measurement data into a much narrower set of measurements and condense all the data into one tidy file.
 
